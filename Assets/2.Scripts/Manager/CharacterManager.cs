@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor.Animations;
+using Unity.VisualScripting;
 
 public class CharacterManager : MonoBehaviour
 {
@@ -9,8 +11,14 @@ public class CharacterManager : MonoBehaviour
     public InputField InputName;
     public Button JoinButton;
 
+    [Header("Select Character")]
+    public RuntimeAnimatorController[] animators;
+    [SerializeField] GameObject[] renderers;
+    [SerializeField] GameObject characterSelectImage;
 
-    
+    public int selectIndex = 0;
+
+
     private void Awake()
     {
         if (Instance != null)
@@ -47,5 +55,22 @@ public class CharacterManager : MonoBehaviour
     public void OnClickJoinButton()
     {
         SceneManager.LoadScene("Game");
+    }
+
+    public void OnClickChangeCharacter()
+    {
+        characterSelectImage.SetActive(true);
+    }
+
+    public void OnClickCharacter(int index)
+    {
+        foreach (GameObject item in renderers)
+        {
+            item.SetActive(false);
+        }
+        selectIndex = index;
+        renderers[index].SetActive(true);
+
+        characterSelectImage.SetActive(false);
     }
 }

@@ -26,8 +26,7 @@ public class CharacterAimRotate : MonoBehaviour
 
     private void RotateAim(Vector2 direction)
     {
-        Debug.Log(direction);
-
+        
         float rotateZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         float rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 

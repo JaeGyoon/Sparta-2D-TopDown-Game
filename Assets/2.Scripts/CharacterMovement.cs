@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 [RequireComponent (typeof(CharacterController)), RequireComponent(typeof(Rigidbody2D))]
 public class CharacterMovement : MonoBehaviour  // 실제로 움직이는 기능을 담당하는 서비스 부분
@@ -7,6 +8,7 @@ public class CharacterMovement : MonoBehaviour  // 실제로 움직이는 기능
     private CharacterController controller;
     private Rigidbody2D rigid;
     [SerializeField] private Vector2 movementDirection = Vector2.zero;
+    [SerializeField] private float speed = 10f;
 
     private void Awake()
     {
@@ -31,7 +33,7 @@ public class CharacterMovement : MonoBehaviour  // 실제로 움직이는 기능
 
     private void CharacterMove(Vector2 direction)
     {        
-        direction = direction * 5; // 추후 스텟에서 값을 받기 전까지 하드코딩
+        direction = direction * speed; // 추후 스텟에서 값을 받기 전까지 하드코딩
         rigid.velocity = direction;
     }
 }

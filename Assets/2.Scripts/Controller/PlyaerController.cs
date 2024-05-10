@@ -22,7 +22,7 @@ public class PlyaerController : CharacterController                             
 
     public void OnLook(InputValue value)
     {        
-        Vector2 lookDirection = value.Get<Vector2>().normalized;                    // UI 에서 마우스 커서 위치
+        Vector2 lookDirection = value.Get<Vector2>();                    // UI 에서 마우스 커서 위치
 
         Vector2 worldPoint = camara.ScreenToWorldPoint(lookDirection);              // 마우스 위치를 메인 카메라에서 바라봤을때의 월드 좌표로 변환한 값.
 

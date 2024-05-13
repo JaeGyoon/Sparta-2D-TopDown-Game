@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public class GameUI : MonoBehaviour
@@ -19,6 +20,20 @@ public class GameUI : MonoBehaviour
     public Button ChangeButton;
     [SerializeField] GameObject NameChangePanel;
 
+    [Header("접속 유저")]
+    [SerializeField] GameObject userNameText;
+    [SerializeField] Transform LayoutGroup;
+    CharacterInfomation characterInfomation;        
+    [SerializeField] GameObject UserListPanel;
+    [SerializeField] List<CharacterInfomation> Users = new List<CharacterInfomation>();
+    List<GameObject> instantiatedGameObject = new List<GameObject>();
+
+    [Header("캐릭터 변경")]
+    [SerializeField] GameObject characterSelectImage;
+    CharacterChanger characterChanger;
+
+
+
     private void Awake()
     {
         
@@ -28,8 +43,12 @@ public class GameUI : MonoBehaviour
     void Start()
     {
         Player = CharacterManager.Instance.Player;
+        characterInfomation = Player.GetComponent<CharacterInfomation>();
+        characterChanger = Player.GetComponent<CharacterChanger>();
+        //DataUpdate();
 
-        DataUpdate();
+        /*nameText.text = CharacterManager.Instance.InputName.text;
+        characterInfomation.name = nameText.text;*/
     }
 
     // Update is called once per frame
@@ -53,6 +72,17 @@ public class GameUI : MonoBehaviour
     void DataUpdate()
     {
         nameText.text = CharacterManager.Instance.InputName.text;
+        characterInfomation.name = nameText.text;
+                
+        ClearGameObjcet();
+
+        foreach (CharacterInfomation user in Users)
+        {
+            GameObject obj = Instantiate(userNameText, LayoutGroup);
+            obj.GetComponent<Text>().text = user.name;
+
+            instantiatedGameObject.Add(obj);
+        }
     }
 
     public void OpenNameChange()
@@ -60,6 +90,7 @@ public class GameUI : MonoBehaviour
         InputName.text = "";
         NameChangePanel.SetActive(!NameChangePanel.activeSelf);
     }
+
 
     private void NameCheck()
     {
@@ -79,4 +110,68 @@ public class GameUI : MonoBehaviour
         DataUpdate();
         OpenNameChange();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {        
+        CharacterInfomation info = collision.gameObject.GetComponent<CharacterInfomation>();
+
+        if (info != null)
+        {            
+            Users.Add(info);
+            
+        }
+
+        DataUpdate();
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        CharacterInfomation info = collision.gameObject.GetComponent<CharacterInfomation>();
+
+        if (info != null)
+        {
+            Users.Remove(info);           
+        }
+    }
+
+    private void ClearGameObjcet()
+    {
+        
+
+        if (instantiatedGameObject.Count == 0)
+        {
+            return;
+        }
+
+        foreach (GameObject item in instantiatedGameObject)
+        {
+            Destroy(item);
+        }
+
+        instantiatedGameObject.Clear();
+    }
+
+    public void OpenUserList()
+    {
+        DataUpdate();
+        UserListPanel.SetActive(!UserListPanel.activeSelf);
+    }
+
+    public void OnClickChangeCharacter()
+    {
+        characterSelectImage.SetActive(!characterSelectImage.activeSelf);
+    }
+
+    public void OnClickCharacter(int index)
+    {
+        
+        CharacterManager.Instance.selectIndex = index;
+
+        characterChanger.CharacterChange();
+
+        characterSelectImage.SetActive(false);
+
+
+    }
+
 }

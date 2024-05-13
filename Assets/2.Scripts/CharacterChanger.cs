@@ -14,12 +14,17 @@ public class CharacterChanger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator.runtimeAnimatorController = CharacterManager.Instance.animators[CharacterManager.Instance.selectIndex];
+        CharacterChange();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void CharacterChange()
+    {
+        animator.runtimeAnimatorController = CharacterManager.Instance.animators[CharacterManager.Instance.selectIndex];
     }
 }

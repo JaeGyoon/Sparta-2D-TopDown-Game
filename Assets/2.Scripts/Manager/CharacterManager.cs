@@ -15,8 +15,10 @@ public class CharacterManager : MonoBehaviour
     public RuntimeAnimatorController[] animators;
     [SerializeField] GameObject[] renderers;
     [SerializeField] GameObject characterSelectImage;
-
+    public GameObject Player;
     public int selectIndex = 0;
+
+
 
 
     private void Awake()

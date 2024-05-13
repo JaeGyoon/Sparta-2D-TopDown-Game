@@ -6,9 +6,11 @@ public class PlyaerController : CharacterController                             
 {
     private Camera camara;
 
+    
     private void Awake()
     {
         camara = Camera.main;
+        CharacterManager.Instance.Player = this.gameObject;
     }
 
     /* PlayerInput 컴포넌트의 Actions에서 정의된 Move의 값(Vecotor2)을 InputValue 타입으로 받는다.

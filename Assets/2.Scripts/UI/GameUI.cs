@@ -32,7 +32,8 @@ public class GameUI : MonoBehaviour
     [SerializeField] GameObject characterSelectImage;
     CharacterChanger characterChanger;
 
-
+    [Header("NPC ¥Î»≠")]
+    PlayerInteract playerInteract;
 
     private void Awake()
     {
@@ -45,6 +46,7 @@ public class GameUI : MonoBehaviour
         Player = CharacterManager.Instance.Player;
         characterInfomation = Player.GetComponent<CharacterInfomation>();
         characterChanger = Player.GetComponent<CharacterChanger>();
+        playerInteract = Player.GetComponentInChildren<PlayerInteract>();
         //DataUpdate();
 
         /*nameText.text = CharacterManager.Instance.InputName.text;
